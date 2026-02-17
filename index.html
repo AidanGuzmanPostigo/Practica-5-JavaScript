@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agenda</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Agenda</h1>
+    <p>Contactos con 1..N teléfonos (localStorage)</p>
+  </header>
+  <main>
+    <section>
+      <h2>Nuevo contacto</h2>
+      <form id="formContacto" novalidate>
+        <label>
+          Nombre
+          <input id="inpNombre" type="text" required minlength="2" />
+        </label>
+        <label>
+          Apellidos
+          <input id="inpApellidos" type="text" required minlength="2" />
+        </label>
+        <fieldset>
+          <legend>Teléfonos</legend>
+          <label>
+            Número
+            <input id="inpTelNumero" type="tel" inputmode="numeric" pattern="[0-9]{6,15}"/>
+          </label>
+          <!-- OPCIONAL:
+               Añadir descripción si haces la ampliación -->
+          <button id="btnAddTel" type="button">Añadir teléfono</button>
+          <p class="muted">Teléfonos añadidos:</p>
+          <ul id="ulTelefonos"></ul>
+        </fieldset>
+        <button type="submit">Guardar contacto</button>
+        <button type="reset" id="btnLimpiar">Limpiar</button>
+        <output id="msg"></output>
+      </form>
+    </section>
+    <section>
+      <h2>Contactos</h2>
+      <button id="btnBorrarTodo" type="button">Borrar toda la agenda</button>
+      <section id="secContactos" aria-live="polite"></section>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
