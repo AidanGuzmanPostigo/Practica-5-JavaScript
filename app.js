@@ -9,7 +9,7 @@ const listaContactos = document.querySelector("#secContactos");
 const btnLimpiar = document.querySelector("#btnLimpiar");
 const error = document.querySelector("#msg");
 const agenda = cargarContactos();
-let contador = agenda.length;
+let contador = parseInt(localStorage.getItem("contador")) || agenda.length;
 
 init();
 
@@ -42,6 +42,7 @@ function limpiarAgenda(){
     agenda.length = 0;
     contador = 0;
     localStorage.removeItem("agenda");
+    localStorage.removeItem("contador");
     render();
 }
 function guardarContacto(){
@@ -57,6 +58,7 @@ function guardarContacto(){
     limpiar();
     agenda.push(contacto);
     localStorage.setItem("agenda", JSON.stringify(agenda));
+    localStorage.setItem("contador", contador);
     render() 
 }
 function agregarTelefono(){
@@ -91,7 +93,17 @@ function agruparTelefonos(){
 function render(){
     listaContactos.innerHTML = "";
     for (let i = 0; i<agenda.length;i++){
-        listaContactos.innerHTML+= `Id: ${agenda[i].id}<br>Nombre: ${agenda[i].nombre}<br>Apellidos: ${agenda[i].apellidos}<br>Teléfonos: ${agenda[i].telefonos.join(", ")}<br>`
+        const contacto = document.createElement("div"); 
+        contacto.innerHTML= `Id: ${agenda[i].id}<br>Nombre: ${agenda[i].nombre}<br>Apellidos: ${agenda[i].apellidos}<br>Teléfonos: ${agenda[i].telefonos.join(", ")}<br>`
+        listaContactos.appendChild(contacto);
+        const borrarContacto = document.createElement("button");
+        borrarContacto.textContent = "🗑️";
+        contacto.appendChild(borrarContacto);
+        borrarContacto.addEventListener("click", () => {
+            listaContactos.removeChild(contacto);
+            agenda.splice(i,1);
+            localStorage.setItem("agenda", JSON.stringify(agenda));
+        });
     }
 }
 function cargarContactos() {
